@@ -10,11 +10,15 @@ import { Button } from '../../components/Button';
 
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID } from '@env';
 import { Alert } from 'react-native';
+import { Realm, useApp } from '@realm/react';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export function SignIn() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const app = useApp();
+
   const [_, response, googleSignIng] = Google.useAuthRequest({
     androidClientId: ANDROID_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -34,7 +38,12 @@ export function SignIn() {
   useEffect(() => {
     if (response?.type === 'success') {
       if (response.authentication?.idToken) {
-
+        const credentials = Realm.Credentials.jwt(response.authentication.idToken);
+        app.logIn(credentials).catch((error) => {
+          console.log(error);
+          Alert.alert('Entrar', 'Não foi possível conectar-se a sua conta google.')
+          setIsAuthenticating(false);
+        });
       } else {
         Alert.alert('Entrar', 'Não foi possível conectar-se a sua conta google.')
         setIsAuthenticating(false);
@@ -44,7 +53,7 @@ export function SignIn() {
 
   return (
     <Container source={backgroundImg}>
-      <Title>Ignite Fleet</Title>
+      <Title>Fleet</Title>
 
       <Slogan>
         Gestão de uso de veículos
