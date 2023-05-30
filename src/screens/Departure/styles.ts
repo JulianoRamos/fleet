@@ -1,4 +1,3 @@
-
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -8,5 +7,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   flex: 1;
-  padding: 0 32px;
-`;
+  gap: 16px;
+  padding: 32px;
+  margin-top: 16px;
+`; 
