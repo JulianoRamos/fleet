@@ -1,4 +1,5 @@
 import 'react-native-get-random-values';
+import './src/libs/dayjs';
 
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
@@ -33,7 +34,7 @@ export default function App() {
   }
 
   return (
-    <AppProvider id={"application-0-goaaa"}>
+    <AppProvider id={REALM_APP_ID}>
       <ThemeProvider theme={theme}>
         <SafeAreaProvider style={{ backgroundColor: theme.COLORS.GRAY_800 }}>
           <StatusBar
